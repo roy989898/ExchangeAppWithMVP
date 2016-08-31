@@ -10,6 +10,9 @@ import io.realm.RealmConfiguration;
 
 
 public class MyApplication extends Application {
+    private ApplicationComponent component;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -21,5 +24,9 @@ public class MyApplication extends Application {
                         .enableDumpapp(Stetho.defaultDumperPluginsProvider(this))
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
+
+
+        component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+
     }
 }
