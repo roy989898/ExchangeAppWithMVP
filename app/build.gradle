@@ -2,15 +2,16 @@ apply plugin: 'com.android.application'
 apply plugin: 'realm-android'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 23
     buildToolsVersion "24.0.1"
 
     defaultConfig {
         applicationId "poly.pom.exchangerateapp"
         minSdkVersion 18
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -28,7 +29,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
 
 //    Retrofit2
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
@@ -37,5 +38,10 @@ dependencies {
 //Stetho
     compile 'com.facebook.stetho:stetho:1.3.1'
     compile 'com.uphyca:stetho_realm:0.9.0'
+
+//Robolectric
+    testCompile "org.robolectric:robolectric:3.1.2"
+
+    androidTestCompile 'com.android.support.test:runner:0.5'
 
 }
