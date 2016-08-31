@@ -13,29 +13,15 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
+//    private Bank bank;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.fixer.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
-        Call<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
 
-         call.enqueue(new Callback<Bank>() {
-            @Override
-            public void onResponse(Response<Bank> response) {
-                Bank bank = response.body();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });*/
 
     }
+
 }
