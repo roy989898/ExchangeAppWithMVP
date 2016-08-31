@@ -23,30 +23,12 @@ import retrofit2.Retrofit;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class ApplicationTest extends ApplicationTestCase<Application> {
+
+
     public ApplicationTest() {
         super(Application.class);
     }
 
 
-    @Test
-    public void testName() {
-        Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl("http://api.fixer.io/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build();
-        FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
-        Call<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
 
-        call.enqueue(new Callback<Bank>() {
-            @Override
-            public void onResponse(Response<Bank> response) {
-                Bank bank = response.body();
-            }
-
-            @Override
-            public void onFailure(Throwable t) {
-
-            }
-        });
-    }
 }
