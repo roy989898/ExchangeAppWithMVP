@@ -6,6 +6,8 @@ public interface RateDataSource {
 
     public void convertValue(String from, String to, double money, ConvertValueCallback callback);
 
+    public void deleteAll();
+
 
     interface RefreshCallback {
         public void refreshSuccess();
