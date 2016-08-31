@@ -1,9 +1,10 @@
 package poly.pom.exchangerateapp.repository.RealmModule;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
 
-public class Rate {
+public class Rate extends RealmObject {
     @PrimaryKey
     private String name;
     private double rateBaseEur;
