@@ -36,7 +36,7 @@ public class Rates {
     private Double tRY;
     private Double uSD;
     private Double zAR;
-    private Map<String, Object> additionalProperties = new HashMap<String, Object>();
+
 
     /**
      *
@@ -596,12 +596,6 @@ public class Rates {
         this.zAR = zAR;
     }
 
-    public Map<String, Object> getAdditionalProperties() {
-        return this.additionalProperties;
-    }
 
-    public void setAdditionalProperty(String name, Object value) {
-        this.additionalProperties.put(name, value);
-    }
 
 }
