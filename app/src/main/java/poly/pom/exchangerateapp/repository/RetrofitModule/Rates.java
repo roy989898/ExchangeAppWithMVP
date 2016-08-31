@@ -1,601 +1,286 @@
 package poly.pom.exchangerateapp.repository.RetrofitModule;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class Rates {
 
-    private Double aUD;
-    private Double bGN;
-    private Double bRL;
-    private Double cAD;
-    private Double cHF;
-    private Double cNY;
-    private Double cZK;
-    private Double dKK;
-    private Double gBP;
-    private Double hKD;
-    private Double hRK;
-    private Double hUF;
-    private Double iDR;
-    private Double iLS;
-    private Double iNR;
-    private Double jPY;
-    private Double kRW;
-    private Double mXN;
-    private Double mYR;
-    private Double nOK;
-    private Double nZD;
-    private Double pHP;
-    private Double pLN;
-    private Double rON;
-    private Double rUB;
-    private Double sEK;
-    private Double sGD;
-    private Double tHB;
-    private Double tRY;
-    private Double uSD;
-    private Double zAR;
+    private Double AUD;
+    private Double BGN;
+    private Double BRL;
+    private Double CAD;
+    private Double CHF;
+    private Double CNY;
+    private Double CZK;
+    private Double DKK;
+    private Double GBP;
+    private Double HKD;
+    private Double HRK;
+    private Double HUF;
+    private Double IDR;
+    private Double ILS;
+    private Double INR;
+    private Double JPY;
+    private Double KRW;
+    private Double MXN;
+    private Double MYR;
+    private Double NOK;
+    private Double NZD;
+    private Double PHP;
+    private Double PLN;
+    private Double RON;
+    private Double RUB;
+    private Double SEK;
+    private Double SGD;
+    private Double THB;
+    private Double TRY;
+    private Double USD;
+    private Double ZAR;
 
-
-    /**
-     *
-     * @return
-     * The aUD
-     */
     public Double getAUD() {
-        return aUD;
+        return AUD;
     }
 
-    /**
-     *
-     * @param aUD
-     * The AUD
-     */
-    public void setAUD(Double aUD) {
-        this.aUD = aUD;
+    public void setAUD(Double AUD) {
+        this.AUD = AUD;
     }
 
-    /**
-     *
-     * @return
-     * The bGN
-     */
     public Double getBGN() {
-        return bGN;
+        return BGN;
     }
 
-    /**
-     *
-     * @param bGN
-     * The BGN
-     */
-    public void setBGN(Double bGN) {
-        this.bGN = bGN;
+    public void setBGN(Double BGN) {
+        this.BGN = BGN;
     }
 
-    /**
-     *
-     * @return
-     * The bRL
-     */
-    public Double getBRL() {
-        return bRL;
-    }
-
-    /**
-     *
-     * @param bRL
-     * The BRL
-     */
-    public void setBRL(Double bRL) {
-        this.bRL = bRL;
-    }
-
-    /**
-     *
-     * @return
-     * The cAD
-     */
-    public Double getCAD() {
-        return cAD;
-    }
-
-    /**
-     *
-     * @param cAD
-     * The CAD
-     */
-    public void setCAD(Double cAD) {
-        this.cAD = cAD;
-    }
-
-    /**
-     *
-     * @return
-     * The cHF
-     */
-    public Double getCHF() {
-        return cHF;
-    }
-
-    /**
-     *
-     * @param cHF
-     * The CHF
-     */
-    public void setCHF(Double cHF) {
-        this.cHF = cHF;
-    }
-
-    /**
-     *
-     * @return
-     * The cNY
-     */
-    public Double getCNY() {
-        return cNY;
-    }
-
-    /**
-     *
-     * @param cNY
-     * The CNY
-     */
-    public void setCNY(Double cNY) {
-        this.cNY = cNY;
-    }
-
-    /**
-     *
-     * @return
-     * The cZK
-     */
-    public Double getCZK() {
-        return cZK;
-    }
-
-    /**
-     *
-     * @param cZK
-     * The CZK
-     */
-    public void setCZK(Double cZK) {
-        this.cZK = cZK;
-    }
-
-    /**
-     *
-     * @return
-     * The dKK
-     */
-    public Double getDKK() {
-        return dKK;
-    }
-
-    /**
-     *
-     * @param dKK
-     * The DKK
-     */
-    public void setDKK(Double dKK) {
-        this.dKK = dKK;
-    }
-
-    /**
-     *
-     * @return
-     * The gBP
-     */
-    public Double getGBP() {
-        return gBP;
-    }
-
-    /**
-     *
-     * @param gBP
-     * The GBP
-     */
-    public void setGBP(Double gBP) {
-        this.gBP = gBP;
-    }
-
-    /**
-     *
-     * @return
-     * The hKD
-     */
-    public Double getHKD() {
-        return hKD;
-    }
-
-    /**
-     *
-     * @param hKD
-     * The HKD
-     */
-    public void setHKD(Double hKD) {
-        this.hKD = hKD;
-    }
-
-    /**
-     *
-     * @return
-     * The hRK
-     */
     public Double getHRK() {
-        return hRK;
+        return HRK;
     }
 
-    /**
-     *
-     * @param hRK
-     * The HRK
-     */
-    public void setHRK(Double hRK) {
-        this.hRK = hRK;
+    public void setHRK(Double HRK) {
+        this.HRK = HRK;
     }
 
-    /**
-     *
-     * @return
-     * The hUF
-     */
-    public Double getHUF() {
-        return hUF;
-    }
-
-    /**
-     *
-     * @param hUF
-     * The HUF
-     */
-    public void setHUF(Double hUF) {
-        this.hUF = hUF;
-    }
-
-    /**
-     *
-     * @return
-     * The iDR
-     */
-    public Double getIDR() {
-        return iDR;
-    }
-
-    /**
-     *
-     * @param iDR
-     * The IDR
-     */
-    public void setIDR(Double iDR) {
-        this.iDR = iDR;
-    }
-
-    /**
-     *
-     * @return
-     * The iLS
-     */
     public Double getILS() {
-        return iLS;
+        return ILS;
     }
 
-    /**
-     *
-     * @param iLS
-     * The ILS
-     */
-    public void setILS(Double iLS) {
-        this.iLS = iLS;
+    public void setILS(Double ILS) {
+        this.ILS = ILS;
     }
 
-    /**
-     *
-     * @return
-     * The iNR
-     */
+    public Double getCAD() {
+        return CAD;
+    }
+
+    public void setCAD(Double CAD) {
+        this.CAD = CAD;
+    }
+
+    public Double getCHF() {
+        return CHF;
+    }
+
+    public void setCHF(Double CHF) {
+        this.CHF = CHF;
+    }
+
+    public Double getCNY() {
+        return CNY;
+    }
+
+    public void setCNY(Double CNY) {
+        this.CNY = CNY;
+    }
+
+    public Double getCZK() {
+        return CZK;
+    }
+
+    public void setCZK(Double CZK) {
+        this.CZK = CZK;
+    }
+
+    public Double getDKK() {
+        return DKK;
+    }
+
+    public void setDKK(Double DKK) {
+        this.DKK = DKK;
+    }
+
+    public Double getGBP() {
+        return GBP;
+    }
+
+    public void setGBP(Double GBP) {
+        this.GBP = GBP;
+    }
+
+    public Double getHKD() {
+        return HKD;
+    }
+
+    public void setHKD(Double HKD) {
+        this.HKD = HKD;
+    }
+
+    public Double getHUF() {
+        return HUF;
+    }
+
+    public void setHUF(Double HUF) {
+        this.HUF = HUF;
+    }
+
+    public Double getIDR() {
+        return IDR;
+    }
+
+    public void setIDR(Double IDR) {
+        this.IDR = IDR;
+    }
+
+    public Double getBRL() {
+        return BRL;
+    }
+
+    public void setBRL(Double BRL) {
+        this.BRL = BRL;
+    }
+
     public Double getINR() {
-        return iNR;
+        return INR;
     }
 
-    /**
-     *
-     * @param iNR
-     * The INR
-     */
-    public void setINR(Double iNR) {
-        this.iNR = iNR;
+    public void setINR(Double INR) {
+        this.INR = INR;
     }
 
-    /**
-     *
-     * @return
-     * The jPY
-     */
     public Double getJPY() {
-        return jPY;
+        return JPY;
     }
 
-    /**
-     *
-     * @param jPY
-     * The JPY
-     */
-    public void setJPY(Double jPY) {
-        this.jPY = jPY;
+    public void setJPY(Double JPY) {
+        this.JPY = JPY;
     }
 
-    /**
-     *
-     * @return
-     * The kRW
-     */
     public Double getKRW() {
-        return kRW;
+        return KRW;
     }
 
-    /**
-     *
-     * @param kRW
-     * The KRW
-     */
-    public void setKRW(Double kRW) {
-        this.kRW = kRW;
+    public void setKRW(Double KRW) {
+        this.KRW = KRW;
     }
 
-    /**
-     *
-     * @return
-     * The mXN
-     */
     public Double getMXN() {
-        return mXN;
+        return MXN;
     }
 
-    /**
-     *
-     * @param mXN
-     * The MXN
-     */
-    public void setMXN(Double mXN) {
-        this.mXN = mXN;
+    public void setMXN(Double MXN) {
+        this.MXN = MXN;
     }
 
-    /**
-     *
-     * @return
-     * The mYR
-     */
     public Double getMYR() {
-        return mYR;
+        return MYR;
     }
 
-    /**
-     *
-     * @param mYR
-     * The MYR
-     */
-    public void setMYR(Double mYR) {
-        this.mYR = mYR;
+    public void setMYR(Double MYR) {
+        this.MYR = MYR;
     }
 
-    /**
-     *
-     * @return
-     * The nOK
-     */
     public Double getNOK() {
-        return nOK;
+        return NOK;
     }
 
-    /**
-     *
-     * @param nOK
-     * The NOK
-     */
-    public void setNOK(Double nOK) {
-        this.nOK = nOK;
+    public void setNOK(Double NOK) {
+        this.NOK = NOK;
     }
 
-    /**
-     *
-     * @return
-     * The nZD
-     */
     public Double getNZD() {
-        return nZD;
+        return NZD;
     }
 
-    /**
-     *
-     * @param nZD
-     * The NZD
-     */
-    public void setNZD(Double nZD) {
-        this.nZD = nZD;
+    public void setNZD(Double NZD) {
+        this.NZD = NZD;
     }
 
-    /**
-     *
-     * @return
-     * The pHP
-     */
     public Double getPHP() {
-        return pHP;
+        return PHP;
     }
 
-    /**
-     *
-     * @param pHP
-     * The PHP
-     */
-    public void setPHP(Double pHP) {
-        this.pHP = pHP;
+    public void setPHP(Double PHP) {
+        this.PHP = PHP;
     }
 
-    /**
-     *
-     * @return
-     * The pLN
-     */
     public Double getPLN() {
-        return pLN;
+        return PLN;
     }
 
-    /**
-     *
-     * @param pLN
-     * The PLN
-     */
-    public void setPLN(Double pLN) {
-        this.pLN = pLN;
+    public void setPLN(Double PLN) {
+        this.PLN = PLN;
     }
 
-    /**
-     *
-     * @return
-     * The rON
-     */
     public Double getRON() {
-        return rON;
+        return RON;
     }
 
-    /**
-     *
-     * @param rON
-     * The RON
-     */
-    public void setRON(Double rON) {
-        this.rON = rON;
+    public void setRON(Double RON) {
+        this.RON = RON;
     }
 
-    /**
-     *
-     * @return
-     * The rUB
-     */
     public Double getRUB() {
-        return rUB;
+        return RUB;
     }
 
-    /**
-     *
-     * @param rUB
-     * The RUB
-     */
-    public void setRUB(Double rUB) {
-        this.rUB = rUB;
+    public void setRUB(Double RUB) {
+        this.RUB = RUB;
     }
 
-    /**
-     *
-     * @return
-     * The sEK
-     */
     public Double getSEK() {
-        return sEK;
+        return SEK;
     }
 
-    /**
-     *
-     * @param sEK
-     * The SEK
-     */
-    public void setSEK(Double sEK) {
-        this.sEK = sEK;
+    public void setSEK(Double SEK) {
+        this.SEK = SEK;
     }
 
-    /**
-     *
-     * @return
-     * The sGD
-     */
     public Double getSGD() {
-        return sGD;
+        return SGD;
     }
 
-    /**
-     *
-     * @param sGD
-     * The SGD
-     */
-    public void setSGD(Double sGD) {
-        this.sGD = sGD;
+    public void setSGD(Double SGD) {
+        this.SGD = SGD;
     }
 
-    /**
-     *
-     * @return
-     * The tHB
-     */
     public Double getTHB() {
-        return tHB;
+        return THB;
     }
 
-    /**
-     *
-     * @param tHB
-     * The THB
-     */
-    public void setTHB(Double tHB) {
-        this.tHB = tHB;
+    public void setTHB(Double THB) {
+        this.THB = THB;
     }
 
-    /**
-     *
-     * @return
-     * The tRY
-     */
     public Double getTRY() {
-        return tRY;
+        return TRY;
     }
 
-    /**
-     *
-     * @param tRY
-     * The TRY
-     */
-    public void setTRY(Double tRY) {
-        this.tRY = tRY;
+    public void setTRY(Double TRY) {
+        this.TRY = TRY;
     }
 
-    /**
-     *
-     * @return
-     * The uSD
-     */
     public Double getUSD() {
-        return uSD;
+        return USD;
     }
 
-    /**
-     *
-     * @param uSD
-     * The USD
-     */
-    public void setUSD(Double uSD) {
-        this.uSD = uSD;
+    public void setUSD(Double USD) {
+        this.USD = USD;
     }
 
-    /**
-     *
-     * @return
-     * The zAR
-     */
     public Double getZAR() {
-        return zAR;
+        return ZAR;
     }
 
-    /**
-     *
-     * @param zAR
-     * The ZAR
-     */
-    public void setZAR(Double zAR) {
-        this.zAR = zAR;
+    public void setZAR(Double ZAR) {
+        this.ZAR = ZAR;
     }
-
 
 
 }
