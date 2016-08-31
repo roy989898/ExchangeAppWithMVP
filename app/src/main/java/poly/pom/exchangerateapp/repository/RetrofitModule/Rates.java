@@ -1,5 +1,9 @@
 package poly.pom.exchangerateapp.repository.RetrofitModule;
 
+import java.util.HashMap;
+
+import poly.pom.exchangerateapp.repository.CountryName;
+
 public class Rates {
 
     private Double AUD;
@@ -282,5 +286,42 @@ public class Rates {
         this.ZAR = ZAR;
     }
 
+    public HashMap<String,Double> getRateMap(){
+        HashMap<String,Double> rateMap=new HashMap<>();
+        rateMap.put(CountryName.AUD,getAUD());
+        rateMap.put(CountryName.BGN,getBGN());
+        rateMap.put(CountryName.BRL,getBRL());
+        rateMap.put(CountryName.CAD,getCAD());
+        rateMap.put(CountryName.CHF,getCHF());
+        rateMap.put(CountryName.CNY,getCNY());
+        rateMap.put(CountryName.CZK,getCZK());
+        rateMap.put(CountryName.DKK,getDKK());
+        rateMap.put(CountryName.GBP,getGBP());
+        rateMap.put(CountryName.HKD,getHKD());
+        rateMap.put(CountryName.HRK,getHRK());
+        rateMap.put(CountryName.HUF,getHUF());
+        rateMap.put(CountryName.IDR,getIDR());
+        rateMap.put(CountryName.ILS,getILS());
+        rateMap.put(CountryName.INR,getINR());
+        rateMap.put(CountryName.JPY,getJPY());
+        rateMap.put(CountryName.KRW,getKRW());
+        rateMap.put(CountryName.MXN,getMXN());
+        rateMap.put(CountryName.MYR,getMYR());
+        rateMap.put(CountryName.NOK,getNOK());
+        rateMap.put(CountryName.NZD,getNZD());
+        rateMap.put(CountryName.PHP,getPHP());
+        rateMap.put(CountryName.PLN,getPLN());
+        rateMap.put(CountryName.RON,getRON());
+        rateMap.put(CountryName.RUB,getRUB());
+        rateMap.put(CountryName.SEK,getSEK());
+        rateMap.put(CountryName.SGD,getSGD());
+        rateMap.put(CountryName.THB,getTHB());
+        rateMap.put(CountryName.TRY,getTRY());
+        rateMap.put(CountryName.USD,getUSD());
+        rateMap.put(CountryName.ZAR,getZAR());
 
+        return rateMap;
+
+
+    }
 }
