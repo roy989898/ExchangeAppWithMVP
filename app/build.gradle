@@ -44,4 +44,8 @@ dependencies {
 
     androidTestCompile 'com.android.support.test:runner:0.5'
 
+//    Awaitility
+    androidTestCompile 'org.awaitility:awaitility:2.0.0'
+    testCompile 'org.awaitility:awaitility:2.0.0'
+
 }
