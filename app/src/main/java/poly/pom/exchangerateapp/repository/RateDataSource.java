@@ -3,6 +3,7 @@ package poly.pom.exchangerateapp.repository;
 
 import poly.pom.exchangerateapp.repository.RetrofitModule.Bank;
 import retrofit2.Call;
+import rx.Observable;
 
 public interface RateDataSource {
     public void refreshData(RefreshCallback callback);
@@ -13,7 +14,7 @@ public interface RateDataSource {
 
 
 
-    public void setBankAPI(Call<Bank> bankAPI);
+    public void setBankAPI(Observable<Bank> bankAPI);
 
     interface RefreshCallback {
         public void refreshSuccess();
