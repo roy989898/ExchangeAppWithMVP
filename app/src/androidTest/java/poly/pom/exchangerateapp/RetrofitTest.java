@@ -22,6 +22,11 @@ import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
+import rx.Observer;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static org.awaitility.Awaitility.await;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -37,7 +42,7 @@ import static org.hamcrest.Matchers.not;
 public class RetrofitTest extends ApplicationTestCase<Application> {
 
 
-    private Response<Bank> response;
+
     private Bank bank;
 
     public RetrofitTest() {
@@ -50,19 +55,28 @@ public class RetrofitTest extends ApplicationTestCase<Application> {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.fixer.io/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
-        Call<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
+        Observable<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
 
-        call.enqueue(new Callback<Bank>() {
+        call.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
             @Override
-            public void onResponse(Response<Bank> response) {
-                bank = response.body();
+            public void onCompleted() {
+
             }
 
             @Override
-            public void onFailure(Throwable t) {
+            public void onError(Throwable e) {
 
+
+
+
+            }
+
+            @Override
+            public void onNext(Bank rbank) {
+                bank=rbank;
             }
         });
 
