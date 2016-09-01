@@ -19,7 +19,7 @@ public class UtilTest {
 
     @Test
     public void testGetTodayDate() throws Exception {
-        assertEquals("20160831",Util.getTodayDate());
+        assertEquals(20160901,Util.getTodayDate());
 
     }
 }
