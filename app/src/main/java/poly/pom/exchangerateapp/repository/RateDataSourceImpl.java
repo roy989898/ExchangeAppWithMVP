@@ -64,7 +64,32 @@ public class RateDataSourceImpl implements RateDataSource {
                 Realm realm = Realm.getDefaultInstance();
 //                delete the old first
                 deleteAllRate(realm);
-                realm.executeTransactionAsync(new Realm.Transaction() {
+
+                realm.executeTransaction(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        Rates rates = bank.getRates();
+
+                        if (rates == null) {
+                            callback.refreshFail("Response null");
+                            return;
+                        }
+
+//                       write at here
+
+                        int todatDayint = Util.getTodayDate();
+
+                        HashMap<String, Double> rateMap = rates.getRateMap();
+                        for (Map.Entry<String, Double> entry : rateMap.entrySet()) {
+                            Rate rate = realm.createObject(Rate.class);
+                            rate.setName(entry.getKey());
+                            rate.setRateBaseEur(entry.getValue());
+                            rate.setUpdateDate(todatDayint);
+                        }
+                        callback.refreshSuccess();
+                    }
+                });
+               /* realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
                         Rates rates = bank.getRates();
@@ -99,8 +124,8 @@ public class RateDataSourceImpl implements RateDataSource {
                     public void onError(Throwable error) {
                         callback.refreshFail(error.toString());
                     }
-                });
-//                callback.refreshSuccess();
+                });*/
+
 
             }
         });
