@@ -23,6 +23,8 @@ import poly.pom.exchangerateapp.repository.RetrofitModule.FixerIOAPI;
 import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import rx.Observable;
 
 import static junit.framework.Assert.assertNotNull;
 import static junit.framework.Assert.assertNotSame;
@@ -37,15 +39,17 @@ import static org.hamcrest.Matchers.is;
 public class RateDataSourceImplTest {
     private RateDataSource dataSource;
     private Boolean success=false;
+    private int count=0;
 
     @Before
     public void setUp() throws Exception {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://api.fixer.io/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
         FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
-        Call<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
+        Observable<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
 
         dataSource = new RateDataSourceImpl();
         dataSource.setBankAPI(call);
@@ -72,7 +76,7 @@ public class RateDataSourceImplTest {
 
             }
         });
-        Awaitility.await().atMost(10,TimeUnit.SECONDS).until(new Callable<Boolean>() {
+        Awaitility.await().atMost(20,TimeUnit.SECONDS).until(new Callable<Boolean>() {
 
             @Override
             public Boolean call() throws Exception {
