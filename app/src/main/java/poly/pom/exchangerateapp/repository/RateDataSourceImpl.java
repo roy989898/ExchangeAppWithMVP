@@ -47,7 +47,7 @@ public class RateDataSourceImpl implements RateDataSource {
             return;
         }
 
-        bankAPI.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
+        bankAPI.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
             @Override
             public void onCompleted() {
 
@@ -100,7 +100,7 @@ public class RateDataSourceImpl implements RateDataSource {
                         callback.refreshFail(error.toString());
                     }
                 });
-                callback.refreshSuccess();
+//                callback.refreshSuccess();
 
             }
         });
