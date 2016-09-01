@@ -17,10 +17,7 @@ import java.util.concurrent.TimeUnit;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Bank;
 import poly.pom.exchangerateapp.repository.RetrofitModule.FixerIOAPI;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Rates;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.GsonConverterFactory;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
@@ -29,9 +26,6 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 import static org.awaitility.Awaitility.await;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.not;
-
 
 
 /**
@@ -40,7 +34,6 @@ import static org.hamcrest.Matchers.not;
 @RunWith(AndroidJUnit4.class)
 @LargeTest
 public class RetrofitTest extends ApplicationTestCase<Application> {
-
 
 
     private Bank bank;
@@ -60,7 +53,7 @@ public class RetrofitTest extends ApplicationTestCase<Application> {
         FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
         Observable<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
 
-        call.observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
+        call.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
             @Override
             public void onCompleted() {
 
@@ -70,13 +63,11 @@ public class RetrofitTest extends ApplicationTestCase<Application> {
             public void onError(Throwable e) {
 
 
-
-
             }
 
             @Override
             public void onNext(Bank rbank) {
-                bank=rbank;
+                bank = rbank;
             }
         });
 
