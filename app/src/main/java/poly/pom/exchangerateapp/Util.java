@@ -8,12 +8,12 @@ import java.util.Calendar;
  */
 public class Util {
 
-    static public String getTodayDate(){
+    static public int getTodayDate(){
         Calendar c = Calendar.getInstance();
         SimpleDateFormat format=new SimpleDateFormat("yyyyMMdd");
         String result = format.format(c.getTime());
 
 
-        return result;
+        return Integer.parseInt(result);
     }
 }
