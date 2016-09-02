@@ -108,4 +108,66 @@ public class RateDataSourceImplTest {
 
 
     }
+
+    @Test
+    public void convertValueTestwithCacheandOnline() throws Exception {
+//        trun on the device wifi
+        TestSubscriber<Double> suber=new TestSubscriber<>();
+        dataSource.convertValue(CountryName.HKD,CountryName.JPY,1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(suber);
+        suber.awaitTerminalEvent();
+        suber.assertNoErrors();
+        Double result = suber.getOnNextEvents().get(0);
+        Assert.assertThat(result,Matchers.not(0D));
+        Assert.assertThat(result,Matchers.not(-1D));
+
+    }
+    @Test
+    public void convertValueTestwithCacheandOffnline() throws Exception {
+//        trun off the device wifi
+        TestSubscriber<Double> suber=new TestSubscriber<>();
+        dataSource.convertValue(CountryName.HKD,CountryName.JPY,1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(suber);
+        suber.awaitTerminalEvent();
+        suber.assertNoErrors();
+        Double result = suber.getOnNextEvents().get(0);
+        Assert.assertThat(result,Matchers.not(0D));
+        Assert.assertThat(result,Matchers.not(-1D));
+
+    }
+    @Test
+    public void convertValueTestwithNoCacheandOffnline() throws Exception {
+//        trun off the device wifi
+//        delete all cache firsdt
+        deleteAll();
+
+
+        TestSubscriber<Double> suber=new TestSubscriber<>();
+        dataSource.convertValue(CountryName.HKD,CountryName.JPY,1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(suber);
+        suber.awaitTerminalEvent();
+        suber.assertNoErrors();
+        Double result = suber.getOnNextEvents().get(0);
+        Assert.assertThat(result,Matchers.not(0D));
+        Assert.assertThat(result,Matchers.is(-1D));
+
+    }
+
+    @Test
+    public void convertValueTestwithNoCacheandOnline() throws Exception {
+//        trun On the device wifi
+//        delete all cache firsdt
+        deleteAll();
+
+
+        TestSubscriber<Double> suber=new TestSubscriber<>();
+        dataSource.convertValue(CountryName.HKD,CountryName.JPY,1).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(suber);
+        suber.awaitTerminalEvent();
+        suber.assertNoErrors();
+        Double result = suber.getOnNextEvents().get(0);
+        Assert.assertThat(result,Matchers.not(0D));
+        Assert.assertThat(result,Matchers.not(-1D));
+
+    }
 }
