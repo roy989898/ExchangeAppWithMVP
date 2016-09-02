@@ -11,4 +11,8 @@ public interface ExchangeView {
     void showUpdateSuccessMessage();
 
     void showUpdateFailMessage();
+
+    String getcalculateAreaString();
+
+    String[] getExchangeCountrty();
 }
