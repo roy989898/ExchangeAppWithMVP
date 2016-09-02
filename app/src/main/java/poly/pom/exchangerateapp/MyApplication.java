@@ -10,7 +10,7 @@ import io.realm.RealmConfiguration;
 
 
 public class MyApplication extends Application {
-    private ApplicationComponent component;
+
 
 
     @Override
@@ -26,7 +26,7 @@ public class MyApplication extends Application {
                         .build());
 
 
-        component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
+
 
     }
 }
