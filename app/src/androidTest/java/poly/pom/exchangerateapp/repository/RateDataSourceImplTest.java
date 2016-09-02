@@ -1,18 +1,13 @@
 package poly.pom.exchangerateapp.repository;
 
-import android.provider.Telephony;
 import android.support.test.filters.LargeTest;
 import android.support.test.runner.AndroidJUnit4;
 
-import org.awaitility.Awaitility;
 import org.hamcrest.Matchers;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-
-import java.util.concurrent.Callable;
-import java.util.concurrent.TimeUnit;
 
 import io.realm.Realm;
 import io.realm.RealmQuery;
@@ -20,16 +15,16 @@ import io.realm.RealmResults;
 import poly.pom.exchangerateapp.repository.RealmModule.Rate;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Bank;
 import poly.pom.exchangerateapp.repository.RetrofitModule.FixerIOAPI;
-import retrofit2.Call;
 import retrofit2.GsonConverterFactory;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.observers.TestSubscriber;
+import rx.schedulers.Schedulers;
 
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNotSame;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by User on 31/8/2016.
@@ -38,8 +33,8 @@ import static org.hamcrest.Matchers.is;
 @LargeTest
 public class RateDataSourceImplTest {
     private RateDataSource dataSource;
-    private Boolean success=false;
-    private int count=0;
+    private Boolean success = false;
+    private int count = 0;
 
     @Before
     public void setUp() throws Exception {
@@ -54,47 +49,61 @@ public class RateDataSourceImplTest {
         dataSource = new RateDataSourceImpl();
         dataSource.setBankAPI(call);
 
-        dataSource.deleteAllRate();
+//        dataSource.deleteAllRate();
 
 
     }
 
-    @Test
-    public void testRefreshData() throws Exception {
 
+    private void deleteAll() {
+        Realm realm = Realm.getDefaultInstance();
+        realm.beginTransaction();
+        realm.where(Rate.class).findAll().deleteAllFromRealm();
+        realm.commitTransaction();
 
-        final Realm realm = Realm.getDefaultInstance();
+//ensure alldelete
 
-        dataSource.refreshData(new RateDataSource.RefreshCallback() {
-            @Override
-            public void refreshSuccess() {
-                success=true;
-            }
-
-            @Override
-            public void refreshFail(String error) {
-
-            }
-        });
-        Awaitility.await().atMost(20,TimeUnit.SECONDS).until(new Callable<Boolean>() {
-
-            @Override
-            public Boolean call() throws Exception {
-
-                return success;
-            }
-
-        });
         RealmQuery<Rate> query = realm.where(Rate.class);
         RealmResults<Rate> result = query.findAll();
-        for(int i=0;i<realm.where(Rate.class).count();i++){
-            Rate rate = result.get(0);
+        Assert.assertThat(query.count(), Matchers.is(0L));
+
+        realm.close();
+    }
+
+
+    @Test
+    public void testRefreshData() throws Exception {
+        deleteAll();
+
+        Realm realm = Realm.getDefaultInstance();
+
+
+        TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
+//        write at here
+
+
+        dataSource.refreshData().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
+
+        subscriber.awaitTerminalEvent();
+        subscriber.assertNoErrors();
+        assertTrue(subscriber.getOnNextEvents().get(0));
+        Thread.sleep(1000);
+
+        RealmQuery<Rate> query2 = realm.where(Rate.class);
+        RealmResults<Rate> result2 = query2.findAll();
+        Assert.assertThat(query2.count(), Matchers.is(31L));
+        for (int i = 0; i < query2.count(); i++) {
+            Rate rate = result2.get(0);
             assertNotNull(rate.getName());
             assertNotNull(rate.getRateBaseEur());
             assertNotNull(rate.getUpdateDate());
         }
 
-        dataSource.deleteAllRate();
+
+        realm.close();
+
+        deleteAll();
 
 
 
