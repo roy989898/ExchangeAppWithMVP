@@ -12,6 +12,7 @@ public interface RateDataSource {
 
     public void deleteAllRate();
 
+    public boolean isUpdateExpired();
 
 
     public void setBankAPI(Observable<Bank> bankAPI);

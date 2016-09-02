@@ -12,8 +12,6 @@ import poly.pom.exchangerateapp.Util;
 import poly.pom.exchangerateapp.repository.RealmModule.Rate;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Bank;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Rates;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,7 +53,7 @@ public class RateDataSourceImpl implements RateDataSource {
 
             @Override
             public void onError(Throwable e) {
-                Log.d("RxRatitraft",e.toString());
+                Log.d("RxRatitraft", e.toString());
                 callback.refreshFail(e.toString());
             }
 
@@ -129,7 +127,6 @@ public class RateDataSourceImpl implements RateDataSource {
 
             }
         });
-
 
 
     }
@@ -244,7 +241,8 @@ public class RateDataSourceImpl implements RateDataSource {
         return number > 0;
     }
 
-    private boolean isUpdateExpired() {
+    @Override
+    public boolean isUpdateExpired() {
 
         Realm realm = Realm.getDefaultInstance();
         if (realm == null) {
