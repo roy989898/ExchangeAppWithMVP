@@ -15,6 +15,7 @@ import poly.pom.exchangerateapp.repository.RetrofitModule.Rates;
 import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -38,182 +39,59 @@ public class RateDataSourceImpl implements RateDataSource {
 
 
     @Override//        get the rate form the internet and write to the Realm
-    public void refreshData(final RefreshCallback callback) {
+    public Observable<Boolean> refreshData() {
 
-        if (bankAPI == null) {
-            callback.refreshFail("bankAPI or realm is null");
-            return;
-        }
 
-        bankAPI.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(new Observer<Bank>() {
-            @Override
-            public void onCompleted() {
 
-            }
+        return bankAPI.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map(new Func1<Bank, Boolean>() {
 
             @Override
-            public void onError(Throwable e) {
-                Log.d("RxRatitraft", e.toString());
-                callback.refreshFail(e.toString());
-            }
-
-            @Override
-            public void onNext(final Bank bank) {
+            public Boolean call(Bank bank) {
                 Realm realm = Realm.getDefaultInstance();
 //                delete the old first
                 deleteAllRate(realm);
+                realm.beginTransaction();
+                Rates rates = bank.getRates();
+                if(rates==null)
+                    throw new RuntimeException("the rates get from Internet isnull");
+                int todatDayint = Util.getTodayDate();
 
-                realm.executeTransaction(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        Rates rates = bank.getRates();
+                HashMap<String, Double> rateMap = rates.getRateMap();
+                for (Map.Entry<String, Double> entry : rateMap.entrySet()) {
+                    Rate rate = realm.createObject(Rate.class);
+                    rate.setName(entry.getKey());
+                    rate.setRateBaseEur(entry.getValue());
+                    rate.setUpdateDate(todatDayint);
+                }
+                realm.commitTransaction();
 
-                        if (rates == null) {
-                            callback.refreshFail("Response null");
-                            return;
-                        }
+                realm.close();
 
-//                       write at here
-
-                        int todatDayint = Util.getTodayDate();
-
-                        HashMap<String, Double> rateMap = rates.getRateMap();
-                        for (Map.Entry<String, Double> entry : rateMap.entrySet()) {
-                            Rate rate = realm.createObject(Rate.class);
-                            rate.setName(entry.getKey());
-                            rate.setRateBaseEur(entry.getValue());
-                            rate.setUpdateDate(todatDayint);
-                        }
-                        callback.refreshSuccess();
-                    }
-                });
-               /* realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        Rates rates = bank.getRates();
-
-                        if (rates == null) {
-                            callback.refreshFail("Response null");
-                            return;
-                        }
-
-//                       write at here
-
-                        int todatDayint = Util.getTodayDate();
-
-                        HashMap<String, Double> rateMap = rates.getRateMap();
-                        for (Map.Entry<String, Double> entry : rateMap.entrySet()) {
-                            Rate rate = realm.createObject(Rate.class);
-                            rate.setName(entry.getKey());
-                            rate.setRateBaseEur(entry.getValue());
-                            rate.setUpdateDate(todatDayint);
-                        }
-
-                    }
-
-                }, new Realm.Transaction.OnSuccess() {
-                    @Override
-                    public void onSuccess() {
-                        callback.refreshSuccess();
-
-                    }
-                }, new Realm.Transaction.OnError() {
-                    @Override
-                    public void onError(Throwable error) {
-                        callback.refreshFail(error.toString());
-                    }
-                });*/
+                return true;
 
 
             }
         });
 
 
+
+
+
+
     }
 
     //if need refresh,but can't,will return negative
+
+//    if fail ,return -1
     @Override
-    public void convertValue(final String from, final String to, final double money, final ConvertValueCallback callback) {
-        if (bankAPI != null) {
-            if (hasCache()) {
-//                has cache
-                if (!isUpdateExpired()) {
-//                    <24
-//                    TODO calculate
-                    double converted = getRealmandCalculate(from, to, money);
-                    if (converted != -1) {
-//                        converted success
-                        callback.conertValueSuccess(converted);
-                    } else {
-//                        cpnvert fail
-                        callback.conertValueFail("Cant convert");
-                    }
+    public Observable<Double> convertValue(final String from, final String to, final double money) {
+      /* if(hasCache()){
+           if(isUpdateExpired()){}
 
+       }else{
 
-                } else {
-//                    >24,update
-                    refreshData(new RefreshCallback() {
-                        @Override
-                        public void refreshSuccess() {
-//                            online
-                            //                    TODO calculate
-                            double converted = getRealmandCalculate(from, to, money);
-                            if (converted != -1) {
-//                        converted success
-                                callback.conertValueSuccess(converted);
-                            } else {
-//                        cpnvert fail
-                                callback.conertValueFail("Cant convert");
-                            }
-
-                        }
-
-                        @Override
-                        public void refreshFail(String error) {
-//                              offline
-//                            TODO update fail
-                            //                    TODO calculate
-                            double converted = getRealmandCalculate(from, to, money);
-                            if (converted != -1) {
-//                        converted success
-                                callback.conertValueSuccess(converted * -1);
-//                                because update fail but convert success,so,return negative
-                            } else {
-//                        cpnvert fail
-                                callback.conertValueFail("Cant convert");
-                            }
-
-                        }
-                    });
-                }
-            } else {
-//                no cache
-                refreshData(new RefreshCallback() {
-                    @Override
-                    public void refreshSuccess() {
-//                        TODO calculate
-                        double converted = getRealmandCalculate(from, to, money);
-                        if (converted != -1) {
-//                        converted success
-                            callback.conertValueSuccess(converted);
-                        } else {
-//                        cpnvert fail
-                            callback.conertValueFail("Cant convert");
-                        }
-                    }
-
-                    @Override
-                    public void refreshFail(String error) {
-//                      update fail
-//                        TODO can't update
-//                        TODO can't convert
-                        callback.conertValueFail("No Rate information");
-                    }
-                });
-            }
-        } else {
-            callback.conertValueFail("realm and bankAPI is null");
-        }
+       }*/
+        return null;
     }
 
     private double getRealmandCalculate(String from, String to, double money) {
@@ -238,11 +116,12 @@ public class RateDataSourceImpl implements RateDataSource {
         }
         RealmQuery<Rate> query = realm.where(Rate.class);
         long number = query.count();
+        realm.close();
         return number > 0;
     }
 
-    @Override
-    public boolean isUpdateExpired() {
+
+    private boolean isUpdateExpired() {
 
         Realm realm = Realm.getDefaultInstance();
         if (realm == null) {
@@ -250,23 +129,22 @@ public class RateDataSourceImpl implements RateDataSource {
         }
         RealmQuery<Rate> query = realm.where(Rate.class);
         Rate rate = query.findFirst();
-        return rate.getUpdateDate() < Util.getTodayDate();
+        Boolean result=rate.getUpdateDate() < Util.getTodayDate();
+        realm.close();
+        return result;
 
     }
 
     @Override
     public void deleteAllRate() {
         Realm realm = Realm.getDefaultInstance();
-        if (realm != null) {
-            RealmResults<Rate> rates = realm.where(Rate.class).findAll();
+
+
             realm.beginTransaction();
-            long count = realm.where(Rate.class).count();
-            for (int i = 0; i < count; i++) {
-                rates.get(i).deleteFromRealm();
-            }
+        realm.where(Rate.class).findAll().deleteAllFromRealm();
             realm.commitTransaction();
 
-        }
+
 
         realm.close();
 
