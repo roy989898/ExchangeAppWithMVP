@@ -13,8 +13,10 @@ import poly.pom.exchangerateapp.repository.RetrofitModule.Rates;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.Exceptions;
 import rx.exceptions.OnErrorNotImplementedException;
 import rx.functions.Func1;
+import rx.functions.Func2;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
@@ -90,51 +92,58 @@ public class RateDataSourceImpl implements RateDataSource {
             @Override
             public void call(Subscriber<? super Boolean> subscriber) {
                 subscriber.onNext(hasCache());
-//                subscriber.onCompleted();
+                subscriber.onCompleted();
             }
-        }).map(new Func1<Boolean, Boolean>() {
-            @Override
-            public Boolean call(Boolean hasCacheBoolean) {
-                if (hasCacheBoolean) {
-                    if (isUpdateExpired()) {
+        }).flatMap(new Func1<Boolean, Observable<Boolean>>() {
+          @Override
+          public Observable<Boolean> call(Boolean hasCacheBoolean) {
+              if (hasCacheBoolean) {
+                  if (isUpdateExpired()) {
 //                        expired,need update
-                        try {
-                            TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
-                            refreshData().subscribe(subscriber);
-                            subscriber.awaitTerminalEvent();
-                            subscriber.assertNoErrors();
-                        } catch (OnErrorNotImplementedException e) {
-                        }
+                      return refreshData();
 
-                        return true;
-                    } else {
+                  } else {
 //                        no need update
 
-                        return true;
+                      return Observable.just(true);
 
-                    }
-                } else {
-//                    must update!!
-                    refreshData().subscribe();
-                    boolean hasCache=hasCache();
-                    if (hasCache) {
-                        return true;
-                    } else
-                        return false;
+                  }
+              } else {
+//                    no cache,must update!!
+                  return refreshData();
 
-                }
+              }
+          }
+//          may have error when get the data from the internet
+      }).onErrorReturn(new Func1<Throwable, Boolean>() {
+          @Override
+          public Boolean call(Throwable throwable) {
+              try{
+                  getRealmandCalculate(from, to, money);
+                  return true;
+              }catch (Throwable t){
+                  throw Exceptions.propagate(t);
+              }
 
-            }
-        }).map(new Func1<Boolean, Double>() {
-            @Override
-            public Double call(Boolean aBoolean) {
-                if (aBoolean) {
-                    return getRealmandCalculate(from, to, money);
-                } else {
-                    return -1d;
-                }
-            }
-        });
+
+          }
+      }).onErrorReturn(new Func1<Throwable, Boolean>() {
+          @Override
+          public Boolean call(Throwable throwable) {
+              return false;
+          }
+      }).map(new Func1<Boolean, Double>() {
+          @Override
+          public Double call(Boolean canDo) {
+              if(canDo){
+                  return getRealmandCalculate(from, to, money);
+              }
+               return -1d;
+          }
+      });
+
+
+
 
     }
 
