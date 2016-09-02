@@ -1,7 +1,5 @@
 package poly.pom.exchangerateapp.repository;
 
-import android.util.Log;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,9 +11,11 @@ import poly.pom.exchangerateapp.repository.RealmModule.Rate;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Bank;
 import poly.pom.exchangerateapp.repository.RetrofitModule.Rates;
 import rx.Observable;
-import rx.Observer;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.exceptions.OnErrorNotImplementedException;
 import rx.functions.Func1;
+import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
 
 /**
@@ -42,7 +42,6 @@ public class RateDataSourceImpl implements RateDataSource {
     public Observable<Boolean> refreshData() {
 
 
-
         return bankAPI.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).map(new Func1<Bank, Boolean>() {
 
             @Override
@@ -52,7 +51,7 @@ public class RateDataSourceImpl implements RateDataSource {
                 deleteAllRate(realm);
                 realm.beginTransaction();
                 Rates rates = bank.getRates();
-                if(rates==null)
+                if (rates == null)
                     throw new RuntimeException("the rates get from Internet isnull");
                 int todatDayint = Util.getTodayDate();
 
@@ -74,15 +73,11 @@ public class RateDataSourceImpl implements RateDataSource {
         });
 
 
-
-
-
-
     }
 
     //if need refresh,but can't,will return negative
 
-//    if fail ,return -1
+    //    if fail ,return -1
     @Override
     public Observable<Double> convertValue(final String from, final String to, final double money) {
       /* if(hasCache()){
@@ -91,7 +86,56 @@ public class RateDataSourceImpl implements RateDataSource {
        }else{
 
        }*/
-        return null;
+      return Observable.create(new Observable.OnSubscribe<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(hasCache());
+//                subscriber.onCompleted();
+            }
+        }).map(new Func1<Boolean, Boolean>() {
+            @Override
+            public Boolean call(Boolean hasCacheBoolean) {
+                if (hasCacheBoolean) {
+                    if (isUpdateExpired()) {
+//                        expired,need update
+                        try {
+                            TestSubscriber<Boolean> subscriber = new TestSubscriber<>();
+                            refreshData().subscribe(subscriber);
+                            subscriber.awaitTerminalEvent();
+                            subscriber.assertNoErrors();
+                        } catch (OnErrorNotImplementedException e) {
+                        }
+
+                        return true;
+                    } else {
+//                        no need update
+
+                        return true;
+
+                    }
+                } else {
+//                    must update!!
+                    refreshData().subscribe();
+                    boolean hasCache=hasCache();
+                    if (hasCache) {
+                        return true;
+                    } else
+                        return false;
+
+                }
+
+            }
+        }).map(new Func1<Boolean, Double>() {
+            @Override
+            public Double call(Boolean aBoolean) {
+                if (aBoolean) {
+                    return getRealmandCalculate(from, to, money);
+                } else {
+                    return -1d;
+                }
+            }
+        });
+
     }
 
     private double getRealmandCalculate(String from, String to, double money) {
@@ -129,7 +173,7 @@ public class RateDataSourceImpl implements RateDataSource {
         }
         RealmQuery<Rate> query = realm.where(Rate.class);
         Rate rate = query.findFirst();
-        Boolean result=rate.getUpdateDate() < Util.getTodayDate();
+        Boolean result = rate.getUpdateDate() < Util.getTodayDate();
         realm.close();
         return result;
 
@@ -140,10 +184,9 @@ public class RateDataSourceImpl implements RateDataSource {
         Realm realm = Realm.getDefaultInstance();
 
 
-            realm.beginTransaction();
+        realm.beginTransaction();
         realm.where(Rate.class).findAll().deleteAllFromRealm();
-            realm.commitTransaction();
-
+        realm.commitTransaction();
 
 
         realm.close();
