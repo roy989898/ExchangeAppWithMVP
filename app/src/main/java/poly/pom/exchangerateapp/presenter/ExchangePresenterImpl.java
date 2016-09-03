@@ -85,7 +85,7 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
             };
             datasource.convertValue(from, to[i], money).subscribeOn(ioScheduler)
                     .observeOn(mainScheduler)
-                    .subscribe();
+                    .subscribe(observer);
 
         }
 
