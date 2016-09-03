@@ -10,15 +10,23 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
-
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import poly.pom.exchangerateapp.R;
+import poly.pom.exchangerateapp.custom_widget.TextFitTextView;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ExchangeFargment extends Fragment {
 
+
+    @BindView(R.id.edMoney1)
+    TextView edMoney1;
+    @BindView(R.id.edMoney2)
+    TextFitTextView edMoney2;
 
     public ExchangeFargment() {
         // Required empty public constructor
@@ -33,9 +41,12 @@ public class ExchangeFargment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
+        ButterKnife.bind(this, view);
+//        edMoney2.setFitTextToBox(true);
 
-        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+
         return view;
     }
 

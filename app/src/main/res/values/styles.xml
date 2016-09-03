@@ -19,5 +19,12 @@
         <item name="android:textSize">@dimen/calculator_button_size</item>
     </style>
 
+    <style name="MoneyInputStyle">
+        <item name="android:background">@drawable/money_input_background</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">36sp</item>
+    </style>
+
 
 </resources>

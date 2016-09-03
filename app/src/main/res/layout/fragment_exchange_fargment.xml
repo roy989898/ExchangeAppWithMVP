@@ -30,21 +30,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:weightSum="10"
             android:layout_weight="1"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="10">
 
             <Spinner
+                android:id="@+id/spinner1"
                 android:layout_width="0dp"
-                android:layout_weight="3"
                 android:layout_height="match_parent"
-                android:id="@+id/spinner1" />
+                android:layout_weight="3" />
 
             <TextView
+                android:id="@+id/edMoney1"
+                style="@style/MoneyInputStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:id="@+id/edMoney1" />
+                android:text="0" />
         </LinearLayout>
 
         <LinearLayout
@@ -52,19 +54,21 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="horizontal">
-            <Spinner
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="match_parent"
-                android:id="@+id/spinner2" />
 
-            <TextView
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3" />
+
+            <poly.pom.exchangerateapp.custom_widget.TextFitTextView
+                android:id="@+id/edMoney2"
+                style="@style/MoneyInputStyle"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="7"
-                android:textSize="17sp"
-                tools:text="Test"
-                android:id="@+id/edMoney2" />
+                android:text="0"
+                android:textSize="36sp" />
         </LinearLayout>
 
 
