@@ -10,10 +10,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import poly.pom.exchangerateapp.R;
 import poly.pom.exchangerateapp.custom_widget.TextFitTextView;
 
@@ -27,6 +29,42 @@ public class ExchangeFargment extends Fragment {
     TextView edMoney1;
     @BindView(R.id.edMoney2)
     TextFitTextView edMoney2;
+    @BindView(R.id.bt7)
+    Button bt7;
+    @BindView(R.id.bt4)
+    Button bt4;
+    @BindView(R.id.bt1)
+    Button bt1;
+    @BindView(R.id.btPoint)
+    Button btPoint;
+    @BindView(R.id.bt8)
+    Button bt8;
+    @BindView(R.id.bt5)
+    Button bt5;
+    @BindView(R.id.bt2)
+    Button bt2;
+    @BindView(R.id.bt0)
+    Button bt0;
+    @BindView(R.id.bt9)
+    Button bt9;
+    @BindView(R.id.bt6)
+    Button bt6;
+    @BindView(R.id.bt3)
+    Button bt3;
+    @BindView(R.id.btDivide)
+    Button btDivide;
+    @BindView(R.id.btDel)
+    Button btDel;
+    @BindView(R.id.btMinu)
+    Button btMinu;
+    @BindView(R.id.btTimes)
+    Button btTimes;
+    @BindView(R.id.btPlus)
+    Button btPlus;
+    @BindView(R.id.btOk)
+    Button btOk;
+    private TextView textToThisView;
+    private String calculateFormula = "";
 
     public ExchangeFargment() {
         // Required empty public constructor
@@ -42,6 +80,7 @@ public class ExchangeFargment extends Fragment {
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         ButterKnife.bind(this, view);
+        textToThisView = edMoney1;
 //        edMoney2.setFitTextToBox(true);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
@@ -54,5 +93,85 @@ public class ExchangeFargment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @OnClick({R.id.edMoney1, R.id.edMoney2, R.id.bt7, R.id.bt4, R.id.bt1, R.id.btPoint, R.id.bt8, R.id.bt5, R.id.bt2, R.id.bt0, R.id.bt9, R.id.bt6, R.id.bt3, R.id.btDivide, R.id.btDel, R.id.btMinu, R.id.btTimes, R.id.btPlus, R.id.btOk})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.edMoney1:
+                calculateFormula = "";
+                textToThisView = (TextView) view;
+                break;
+            case R.id.edMoney2:
+                calculateFormula = "";
+                textToThisView = (TextView) view;
+                break;
+            case R.id.bt7:
+                calculateFormula = calculateFormula + "7";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt4:
+                calculateFormula = calculateFormula + "4";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt1:
+                calculateFormula = calculateFormula + "1";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btPoint:
+                calculateFormula = calculateFormula + ".";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt8:
+                calculateFormula = calculateFormula + "8";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt5:
+                calculateFormula = calculateFormula + "5";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt2:
+                calculateFormula = calculateFormula + "2";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt0:
+                calculateFormula = calculateFormula + "0";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt9:
+                calculateFormula = calculateFormula + "9";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt6:
+                calculateFormula = calculateFormula + "6";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.bt3:
+                calculateFormula = calculateFormula + "3";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btDivide:
+                calculateFormula = calculateFormula + "/";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btDel:
+                calculateFormula = "";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btMinu:
+                calculateFormula = calculateFormula + "-";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btTimes:
+                calculateFormula = calculateFormula + "*";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btPlus:
+                calculateFormula = calculateFormula + "+";
+                textToThisView.setText(calculateFormula);
+                break;
+            case R.id.btOk:
+                break;
+        }
     }
 }
