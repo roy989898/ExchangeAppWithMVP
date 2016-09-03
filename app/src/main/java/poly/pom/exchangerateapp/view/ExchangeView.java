@@ -1,12 +1,15 @@
 package poly.pom.exchangerateapp.view;
 
 
+import java.util.ArrayList;
+
 public interface ExchangeView {
     void displayCalculator();
+    void hideCalculator();
 
     void showpresenterResult(Double result);
 
-    void showExchangeResult(double[] exchangeResult);
+    void showExchangeResult(int index,double exchangeResult);
 
     void showUpdateSuccessMessage();
 
@@ -14,5 +17,8 @@ public interface ExchangeView {
 
     String getcalculateAreaString();
 
-    String[] getExchangeCountrty();
+    void setCalculatorArea(String display);
+
+    String[] getExchangeToCountrty();
+    String getExchangeFromCountrty();
 }
