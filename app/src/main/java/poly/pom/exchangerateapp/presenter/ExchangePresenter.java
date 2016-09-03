@@ -8,9 +8,13 @@ public interface ExchangePresenter {
 
     void setView(ExchangeView view);
 
-    void calculate(String input);
+    void calculateExchange();
+
+    void inputAnswerCalculate();
 
     void inputClick();
 
     void hideButtonCLick();
+
+
 }
