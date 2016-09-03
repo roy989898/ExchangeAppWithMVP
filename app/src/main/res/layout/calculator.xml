@@ -131,13 +131,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:orientation="vertical">
-        <Button
-            android:id="@+id/btTurn"
-            style="@style/CalculatorButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="Change" />
+   
         <Button
             android:id="@+id/btDel"
             style="@style/CalculatorButtonStyle"
