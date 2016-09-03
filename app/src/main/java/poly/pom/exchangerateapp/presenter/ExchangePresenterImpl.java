@@ -1,27 +1,26 @@
 package poly.pom.exchangerateapp.presenter;
 
-import android.telecom.Connection;
-
 import com.gadberry.utility.expression.Argument;
 import com.gadberry.utility.expression.Expression;
 import com.gadberry.utility.expression.InvalidExpressionException;
 
-import java.util.ArrayList;
-
 import poly.pom.exchangerateapp.repository.RateDataSource;
 import poly.pom.exchangerateapp.view.ExchangeView;
 import rx.Observer;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import rx.Scheduler;
 
 
 public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
     private ExchangeView view;
     private RateDataSource datasource;
+    private Scheduler ioScheduler;
+    private Scheduler mainScheduler;
 
 
-    public ExchangePresenterImpl(RateDataSource datasource) {
+    public ExchangePresenterImpl(RateDataSource datasource, Scheduler ioScheduler, Scheduler mainScheduler) {
         this.datasource = datasource;
+        this.ioScheduler = ioScheduler;
+        this.mainScheduler = mainScheduler;
     }
 
     @Override
@@ -41,11 +40,15 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
 
             @Override
             public void onNext(Boolean aBoolean) {
-                view.showUpdateSuccessMessage();
+                if (aBoolean)
+                    view.showUpdateSuccessMessage();
+                else
+                    view.showUpdateFailMessage();
+
 
             }
         };
-        datasource.refreshData().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(observer);
+        datasource.refreshData().subscribeOn(ioScheduler).observeOn(mainScheduler).subscribe(observer);
     }
 
     @Override
@@ -56,12 +59,12 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
 
     @Override
     public void calculateExchange() {
-        Double money=Double.parseDouble(view.getcalculateAreaString());
+        Double money = Double.parseDouble(view.getcalculateAreaString());
         if (view == null) return;
         String from = view.getExchangeFromCountrty();
         String[] to = view.getExchangeToCountrty();
-        for (int i=0;i<to.length;i++) {
-            final int index=i;
+        for (int i = 0; i < to.length; i++) {
+            final int index = i;
             Observer<Double> observer = new Observer<Double>() {
                 @Override
                 public void onCompleted() {
@@ -76,19 +79,18 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
                 @Override
                 public void onNext(Double aDouble) {
 
-                    view.showExchangeResult(index,aDouble);
+                    view.showExchangeResult(index, aDouble);
 
                 }
             };
-            datasource.convertValue(from,to[i],money).subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+            datasource.convertValue(from, to[i], money).subscribeOn(ioScheduler)
+                    .observeOn(mainScheduler)
                     .subscribe();
 
         }
 
 
     }
-
 
 
     @Override
@@ -116,7 +118,6 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
         view.hideCalculator();
 
     }
-
 
 
     @Override
