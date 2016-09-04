@@ -6,8 +6,10 @@ import com.gadberry.utility.expression.InvalidExpressionException;
 
 import poly.pom.exchangerateapp.repository.RateDataSource;
 import poly.pom.exchangerateapp.view.ExchangeView;
+import rx.Observable;
 import rx.Observer;
 import rx.Scheduler;
+import rx.Subscriber;
 
 
 public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
@@ -59,7 +61,14 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
 
     @Override
     public void calculateExchange() {
-        Double money = Double.parseDouble(view.getcalculateAreaString());
+        Double money=null;
+       try {
+            money = Double.parseDouble(view.getcalculateAreaString());
+       }catch (Exception e){
+          return;
+
+       }
+
         if (view == null) return;
         String from = view.getExchangeFromCountrty();
         String[] to = view.getExchangeToCountrty();
@@ -101,7 +110,7 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
             Argument result = Expression.evaluate(calculate);
             view.setCalculatorArea(result.toString());
         } catch (InvalidExpressionException e) {
-            e.printStackTrace();
+            view.setCalculatorArea("ERROR");
         }
 
     }
