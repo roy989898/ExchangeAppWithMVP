@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -112,7 +113,7 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
         fromSpinner = spCountry1;
         toSpinner = spCountry2;
 
-        
+
 
 //        presenter.setView(this);  TODO
 
@@ -124,6 +125,22 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.main, menu);
         super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_refresh) {
+            presenter.updateRate();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @OnClick({R.id.edMoney1, R.id.edMoney2, R.id.bt7, R.id.bt4, R.id.bt1, R.id.btPoint, R.id.bt8, R.id.bt5, R.id.bt2, R.id.bt0, R.id.bt9, R.id.bt6, R.id.bt3, R.id.btDivide, R.id.btDel, R.id.btMinu, R.id.btTimes, R.id.btPlus, R.id.btOk})
@@ -206,6 +223,7 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
                 break;
             case R.id.btOk:
 //                TODO
+                presenter.calculateExchange();
                 break;
         }
     }
