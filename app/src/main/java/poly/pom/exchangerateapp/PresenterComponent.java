@@ -3,7 +3,7 @@ package poly.pom.exchangerateapp;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import poly.pom.exchangerateapp.presenter.ExchangePresenter;
+import poly.pom.exchangerateapp.view.ExchangeFargment;
 import poly.pom.exchangerateapp.view.ExchangeView;
 
 /**
@@ -12,5 +12,5 @@ import poly.pom.exchangerateapp.view.ExchangeView;
 @Singleton
 @Component(modules = {PresenterModule.class})
 public interface PresenterComponent {
-    void inject(ExchangeView target);
+    void inject(ExchangeFargment target);
 }

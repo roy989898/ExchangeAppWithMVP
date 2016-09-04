@@ -18,6 +18,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -76,14 +78,14 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     Spinner spCountry1;
     @BindView(R.id.spCountry2)
     Spinner spCountry2;
+
+    @Inject
+    ExchangePresenter presenter;
     private TextFitTextView textToThisView;
     private TextFitTextView thisViewShowExchangeResult;
     private String calculateFormula = "";
-
-
     private Spinner fromSpinner;
     private Spinner toSpinner;
-    private ExchangePresenter presenter;
 
     public ExchangeFargment() {
         // Required empty public constructor
