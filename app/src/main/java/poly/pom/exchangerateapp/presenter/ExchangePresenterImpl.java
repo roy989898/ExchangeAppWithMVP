@@ -107,7 +107,7 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
     }
 
 
-    @Override
+   /* @Override
     public void inputClick() {
         view.displayCalculator();
 
@@ -118,7 +118,7 @@ public class ExchangePresenterImpl implements ExchangePresenter, LifePresenter {
         view.hideCalculator();
 
     }
-
+*/
 
     @Override
     public void resume() {

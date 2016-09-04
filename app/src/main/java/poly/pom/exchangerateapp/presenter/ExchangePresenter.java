@@ -12,9 +12,7 @@ public interface ExchangePresenter {
 
     void inputAnswerCalculate();
 
-    void inputClick();
 
-    void hideButtonCLick();
 
 
 }
