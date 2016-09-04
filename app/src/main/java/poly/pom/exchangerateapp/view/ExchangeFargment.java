@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import butterknife.BindView;
@@ -77,11 +78,9 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     private TextFitTextView thisViewShowExchangeResult;
     private String calculateFormula = "";
 
-    private String selectedCountry1;
-    private String selectedCountry2;
-    private String exchangeToCountry;
-    private String exchangeFromCountry;
 
+    private Spinner fromSpinner;
+    private Spinner toSpinner;
     private ExchangePresenter presenter;
 
     public ExchangeFargment() {
@@ -102,13 +101,20 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
         setHasOptionsMenu(true);
 
         textToThisView = edMoney1;
+        thisViewShowExchangeResult = edMoney2;
+
         initialTextSixe = textToThisView.getTextSize();
+
         ArrayAdapter<String> spinnerArray = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, CountryName.getCountryNameArray());
         spCountry1.setAdapter(spinnerArray);
         spCountry2.setAdapter(spinnerArray);
         spCountry1.setOnItemSelectedListener(this);
+        fromSpinner = spCountry1;
+        toSpinner = spCountry2;
 
-        presenter.setView(this);
+        
+
+//        presenter.setView(this);  TODO
 
 
         return view;
@@ -199,6 +205,7 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
                 textToThisView.setText(calculateFormula);
                 break;
             case R.id.btOk:
+//                TODO
                 break;
         }
     }
@@ -207,10 +214,12 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spCountry1:
-                selectedCountry1 = CountryName.getCountryNameArray()[position];
+                fromSpinner = spCountry1;
+                toSpinner = spCountry2;
                 break;
             case R.id.spCountry2:
-                selectedCountry2 = CountryName.getCountryNameArray()[position];
+                fromSpinner = spCountry2;
+                toSpinner = spCountry1;
                 break;
         }
     }
@@ -230,18 +239,18 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void showExchangeResult(int index, double exchangeResult) {
-        thisViewShowExchangeResult.setTextWithReSetSize(exchangeResult+"",initialTextSixe);
+        thisViewShowExchangeResult.setTextWithReSetSize(exchangeResult + "", initialTextSixe);
     }
 
     @Override
     public void showUpdateSuccessMessage() {
-        Toast.makeText(getContext(),getString(R.string.updateSuccessMessage),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.updateSuccessMessage), Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void showUpdateFailMessage() {
-        Toast.makeText(getContext(),getString(R.string.updateFailMessage),Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), getString(R.string.updateFailMessage), Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -256,11 +265,14 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public String[] getExchangeToCountrty() {
-        return new String[0];
+
+        String toCountryString = ((TextView) toSpinner.getSelectedView()).getText().toString();
+        return new String[]{toCountryString};
     }
 
     @Override
     public String getExchangeFromCountrty() {
-        return null;
+        String fromCountryString = ((TextView) fromSpinner.getSelectedView()).getText().toString();
+        return fromCountryString;
     }
 }
