@@ -28,13 +28,18 @@ public class TextFitTextView extends TextView {
         this.fit = fit;
     }
 
+    public void setTextWithReSetSize(CharSequence text,float textSize){
+        setTextSize(TypedValue.COMPLEX_UNIT_PX, textSize);
+        this.setText(text);
+    }
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 //        if (fit)
-        _shrinkToFit();
+        _shrinkToFitsmall();
+
     }
 
-    protected void _shrinkToFit() {
+    protected void _shrinkToFitsmall() {
 
         int height = this.getHeight();
         int lines = this.getLineCount();
@@ -45,8 +50,10 @@ public class TextFitTextView extends TextView {
         float size = this.getTextSize();
         if (y2 > height && size >= 4.0f) {
             this.setTextSize(TypedValue.COMPLEX_UNIT_PX, size - 2.0f);
-            _shrinkToFit();
+            _shrinkToFitsmall();
         }
 
     }
+
+
 }
