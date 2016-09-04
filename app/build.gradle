@@ -69,6 +69,8 @@ dependencies {
 //    Butter knife
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
+//    Espresso
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
     compile files('libs/JExel-1_0_0-beta_13.jar')
 
 
