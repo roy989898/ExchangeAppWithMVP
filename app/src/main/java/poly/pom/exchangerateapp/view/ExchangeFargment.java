@@ -21,6 +21,7 @@ import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import poly.pom.exchangerateapp.MyApplication;
 import poly.pom.exchangerateapp.R;
 import poly.pom.exchangerateapp.custom_widget.TextFitTextView;
 import poly.pom.exchangerateapp.presenter.ExchangePresenter;
@@ -113,9 +114,10 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
         fromSpinner = spCountry1;
         toSpinner = spCountry2;
 
+        ((MyApplication) getActivity().getApplication()).getComponent().inject(this);
 
 
-//        presenter.setView(this);  TODO
+        presenter.setView(this);
 
 
         return view;
@@ -222,7 +224,6 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
                 textToThisView.setText(calculateFormula);
                 break;
             case R.id.btOk:
-//                TODO
                 presenter.calculateExchange();
                 break;
         }

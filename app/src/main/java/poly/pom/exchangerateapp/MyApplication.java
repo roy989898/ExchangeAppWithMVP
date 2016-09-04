@@ -10,8 +10,11 @@ import io.realm.RealmConfiguration;
 
 
 public class MyApplication extends Application {
+    private PresenterComponent component;
 
-
+    public PresenterComponent getComponent() {
+        return component;
+    }
 
     @Override
     public void onCreate() {
@@ -25,7 +28,7 @@ public class MyApplication extends Application {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
 
-
+        component = DaggerPresenterComponent.builder().presenterModule(new PresenterModule()).build();
 
 
     }

@@ -52,9 +52,9 @@ dependencies {
     androidTestCompile 'org.awaitility:awaitility:2.0.0'
     testCompile 'org.awaitility:awaitility:2.0.0'
     //    Dagger2
-    /* apt 'com.google.dagger:dagger-compiler:2.0.2'
-            compile 'com.google.dagger:dagger:2.0.2'
-            provided 'javax.annotation:jsr250-api:1.0'*/
+    apt 'com.google.dagger:dagger-compiler:2.0.2'
+    compile 'com.google.dagger:dagger:2.0.2'
+    provided 'javax.annotation:jsr250-api:1.0'
     //    Mock
     androidTestCompile 'org.mockito:mockito-core:1.+'
     testCompile 'org.mockito:mockito-core:1.+'
@@ -68,10 +68,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.1.0'
     apt 'com.jakewharton:butterknife-compiler:8.1.0'
     compile files('libs/JExel-1_0_0-beta_13.jar')
-
-
-
-
 
 
 }
