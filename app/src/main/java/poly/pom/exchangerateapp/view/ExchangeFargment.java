@@ -10,23 +10,27 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.TextView;
+import android.widget.Spinner;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import poly.pom.exchangerateapp.R;
 import poly.pom.exchangerateapp.custom_widget.TextFitTextView;
+import poly.pom.exchangerateapp.repository.CountryName;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExchangeFargment extends Fragment {
+public class ExchangeFargment extends Fragment implements AdapterView.OnItemSelectedListener {
 
+    float initialTextSixe;
 
     @BindView(R.id.edMoney1)
-    TextView edMoney1;
+    TextFitTextView edMoney1;
     @BindView(R.id.edMoney2)
     TextFitTextView edMoney2;
     @BindView(R.id.bt7)
@@ -63,8 +67,15 @@ public class ExchangeFargment extends Fragment {
     Button btPlus;
     @BindView(R.id.btOk)
     Button btOk;
-    private TextView textToThisView;
+    @BindView(R.id.spCountry1)
+    Spinner spCountry1;
+    @BindView(R.id.spCountry2)
+    Spinner spCountry2;
+    private TextFitTextView textToThisView;
     private String calculateFormula = "";
+
+    private String selectedCountry1;
+    private String selectedCountry2;
 
     public ExchangeFargment() {
         // Required empty public constructor
@@ -80,11 +91,16 @@ public class ExchangeFargment extends Fragment {
         // Sets the Toolbar to act as the ActionBar for this Activity window.
         // Make sure the toolbar exists in the activity and is not null
         ButterKnife.bind(this, view);
-        textToThisView = edMoney1;
-//        edMoney2.setFitTextToBox(true);
-
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
+
+        textToThisView = edMoney1;
+        initialTextSixe = textToThisView.getTextSize();
+        ArrayAdapter<String> spinnerArray = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_dropdown_item, CountryName.getCountryNameArray());
+        spCountry1.setAdapter(spinnerArray);
+        spCountry2.setAdapter(spinnerArray);
+        spCountry1.setOnItemSelectedListener(this);
+
 
         return view;
     }
@@ -100,11 +116,11 @@ public class ExchangeFargment extends Fragment {
         switch (view.getId()) {
             case R.id.edMoney1:
                 calculateFormula = "";
-                textToThisView = (TextView) view;
+                textToThisView = (TextFitTextView) view;
                 break;
             case R.id.edMoney2:
                 calculateFormula = "";
-                textToThisView = (TextView) view;
+                textToThisView = (TextFitTextView) view;
                 break;
             case R.id.bt7:
                 calculateFormula = calculateFormula + "7";
@@ -156,7 +172,7 @@ public class ExchangeFargment extends Fragment {
                 break;
             case R.id.btDel:
                 calculateFormula = "";
-                textToThisView.setText(calculateFormula);
+                textToThisView.setTextWithReSetSize(calculateFormula, initialTextSixe);
                 break;
             case R.id.btMinu:
                 calculateFormula = calculateFormula + "-";
@@ -173,5 +189,22 @@ public class ExchangeFargment extends Fragment {
             case R.id.btOk:
                 break;
         }
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        switch (parent.getId()) {
+            case R.id.spCountry1:
+                selectedCountry1 = CountryName.getCountryNameArray()[position];
+                break;
+            case R.id.spCountry2:
+                selectedCountry2 = CountryName.getCountryNameArray()[position];
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
     }
 }
