@@ -30,6 +30,5 @@ public class MyApplication extends Application {
 
         component = DaggerPresenterComponent.builder().presenterModule(new PresenterModule()).build();
 
-
     }
 }
