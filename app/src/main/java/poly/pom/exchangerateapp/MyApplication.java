@@ -13,7 +13,7 @@ public class MyApplication extends Application {
     private PresenterComponent component;
 
     public PresenterComponent getComponent() {
-        return component;
+        return component ;
     }
 
     @Override
@@ -28,7 +28,13 @@ public class MyApplication extends Application {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build());
 
-        component = DaggerPresenterComponent.builder().presenterModule(new PresenterModule()).build();
+        component = createComponent();
 
+
+
+    }
+
+   public PresenterComponent createComponent(){
+        return component = DaggerPresenterComponent.builder().presenterModule(new PresenterModule()).build();
     }
 }

@@ -33,6 +33,16 @@ public class TestModule  {
         when(dataSource2.refreshData()).thenReturn(Observable.just(true));
         when(dataSource2.convertValue(anyString(),anyString(),anyDouble())).thenReturn(Observable.just(99D));
         return dataSource2;
+       /* RateDataSource dataSource = new RateDataSourceImpl();
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl("http://api.fixer.io/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .build();
+        FixerIOAPI fixerIOAPi = retrofit.create(FixerIOAPI.class);
+        Observable<Bank> call = fixerIOAPi.loadLatestEeurBaseRate();
+        dataSource.setBankAPI(call);
+        return dataSource;*/
 
     }
 

@@ -5,12 +5,12 @@ import poly.pom.exchangerateapp.PresenterComponent;
 import poly.pom.exchangerateapp.testUsed.DaggerTestComponent;
 import poly.pom.exchangerateapp.testUsed.TestModule;
 
-/**
- * Created by User on 4/9/2016.
- */
+
 public class TestApplication extends MyApplication {
+
+
     @Override
-    public PresenterComponent getComponent() {
+    public PresenterComponent createComponent() {
         return DaggerTestComponent.builder().testModule(new TestModule()).build();
     }
 }
