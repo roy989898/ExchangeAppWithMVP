@@ -4,8 +4,8 @@ package poly.pom.exchangerateapp.view;
 import java.util.ArrayList;
 
 public interface ExchangeView {
-    void displayCalculator();
-    void hideCalculator();
+   /* void displayCalculator();
+    void hideCalculator();*/
 
     void showpresenterResult(Double result);
 

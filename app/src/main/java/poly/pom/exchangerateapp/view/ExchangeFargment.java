@@ -25,7 +25,7 @@ import poly.pom.exchangerateapp.repository.CountryName;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExchangeFargment extends Fragment implements AdapterView.OnItemSelectedListener {
+public class ExchangeFargment extends Fragment implements AdapterView.OnItemSelectedListener,ExchangeView {
 
     float initialTextSixe;
 
@@ -206,5 +206,47 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+    //Exchange view Method
+
+
+    @Override
+    public void showpresenterResult(Double result) {
+
+    }
+
+    @Override
+    public void showExchangeResult(int index, double exchangeResult) {
+
+    }
+
+    @Override
+    public void showUpdateSuccessMessage() {
+
+    }
+
+    @Override
+    public void showUpdateFailMessage() {
+
+    }
+
+    @Override
+    public String getcalculateAreaString() {
+        return null;
+    }
+
+    @Override
+    public void setCalculatorArea(String display) {
+
+    }
+
+    @Override
+    public String[] getExchangeToCountrty() {
+        return new String[0];
+    }
+
+    @Override
+    public String getExchangeFromCountrty() {
+        return null;
     }
 }
