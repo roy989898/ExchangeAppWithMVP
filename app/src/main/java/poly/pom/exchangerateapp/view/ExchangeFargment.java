@@ -155,11 +155,16 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
                 textToThisView = (TextFitTextView) view;
                 thisViewShowExchangeResult = edMoney2;
 
+                fromSpinner = spCountry1;
+                toSpinner = spCountry2;
                 break;
             case R.id.edMoney2:
                 calculateFormula = "";
                 textToThisView = (TextFitTextView) view;
                 thisViewShowExchangeResult = edMoney1;
+
+                fromSpinner = spCountry2;
+                toSpinner = spCountry1;
                 break;
             case R.id.bt7:
                 calculateFormula = calculateFormula + "7";
@@ -226,6 +231,7 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
                 textToThisView.setText(calculateFormula);
                 break;
             case R.id.btOk:
+                presenter.inputAnswerCalculate();
                 presenter.calculateExchange();
                 break;
         }
@@ -235,12 +241,10 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (parent.getId()) {
             case R.id.spCountry1:
-                fromSpinner = spCountry1;
-                toSpinner = spCountry2;
+
                 break;
             case R.id.spCountry2:
-                fromSpinner = spCountry2;
-                toSpinner = spCountry1;
+
                 break;
         }
     }
@@ -281,7 +285,8 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void setCalculatorArea(String display) {
-
+        calculateFormula = display;
+        textToThisView.setText(display);
     }
 
     @Override
