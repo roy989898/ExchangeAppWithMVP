@@ -14,18 +14,20 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import poly.pom.exchangerateapp.R;
 import poly.pom.exchangerateapp.custom_widget.TextFitTextView;
+import poly.pom.exchangerateapp.presenter.ExchangePresenter;
 import poly.pom.exchangerateapp.repository.CountryName;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ExchangeFargment extends Fragment implements AdapterView.OnItemSelectedListener,ExchangeView {
+public class ExchangeFargment extends Fragment implements AdapterView.OnItemSelectedListener, ExchangeView {
 
     float initialTextSixe;
 
@@ -72,10 +74,15 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     @BindView(R.id.spCountry2)
     Spinner spCountry2;
     private TextFitTextView textToThisView;
+    private TextFitTextView thisViewShowExchangeResult;
     private String calculateFormula = "";
 
     private String selectedCountry1;
     private String selectedCountry2;
+    private String exchangeToCountry;
+    private String exchangeFromCountry;
+
+    private ExchangePresenter presenter;
 
     public ExchangeFargment() {
         // Required empty public constructor
@@ -101,6 +108,8 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
         spCountry2.setAdapter(spinnerArray);
         spCountry1.setOnItemSelectedListener(this);
 
+        presenter.setView(this);
+
 
         return view;
     }
@@ -117,10 +126,13 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
             case R.id.edMoney1:
                 calculateFormula = "";
                 textToThisView = (TextFitTextView) view;
+                thisViewShowExchangeResult = edMoney2;
+
                 break;
             case R.id.edMoney2:
                 calculateFormula = "";
                 textToThisView = (TextFitTextView) view;
+                thisViewShowExchangeResult = edMoney1;
                 break;
             case R.id.bt7:
                 calculateFormula = calculateFormula + "7";
@@ -207,6 +219,7 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
     //Exchange view Method
 
 
@@ -217,22 +230,23 @@ public class ExchangeFargment extends Fragment implements AdapterView.OnItemSele
 
     @Override
     public void showExchangeResult(int index, double exchangeResult) {
-
+        thisViewShowExchangeResult.setTextWithReSetSize(exchangeResult+"",initialTextSixe);
     }
 
     @Override
     public void showUpdateSuccessMessage() {
+        Toast.makeText(getContext(),getString(R.string.updateSuccessMessage),Toast.LENGTH_SHORT).show();
 
     }
 
     @Override
     public void showUpdateFailMessage() {
-
+        Toast.makeText(getContext(),getString(R.string.updateFailMessage),Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public String getcalculateAreaString() {
-        return null;
+        return calculateFormula;
     }
 
     @Override

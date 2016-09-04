@@ -4,7 +4,7 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="menuUpdate">Update the Rate</string>
-    <array name="countrys">
-        <item></item>
-    </array>
+    <string name="updateSuccessMessage">Update success</string>
+    <string name="updateFailMessage">Update fail</string>
+
 </resources>
